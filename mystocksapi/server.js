@@ -1,10 +1,17 @@
+'use strict';
 var connection = require("./database/connection")
-
-const express = require('express'),
+var express = require('express'),
 app = express(),
 port = 4000;
 const bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+var routes = require("./api/routes/routes");
+routes(app);
+
+app.use('/', routes);
 app.listen(port);
 
 
