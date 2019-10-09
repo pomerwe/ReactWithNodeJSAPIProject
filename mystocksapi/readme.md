@@ -11,3 +11,12 @@ https://iexcloud.io
 no mysql e retorna o nome da ação com base na sua sigla
 
 Foi feito inserção de dados no banco através de função no arquivo ./database/connection.js utilizando a API do site https://iexcloud.io;
+
+Script para create do banco usado: ./database/mystocksdb.md
+
+Sites de referência de estudo:
+https://www.luiztools.com.br/post/como-usar-nodejs-mysql/
+https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
+https://www.twilio.com/blog/2017/08/http-requests-in-node-js.html
+https://nodejs.dev/making-http-requests-with-nodejs
+https://www.luiztools.com.br/post/como-usar-nodejs-mysql/
