@@ -2,5 +2,7 @@
 module.exports =  function(app) {
     var controller = require('../controllers/controller');
   
-    app.get('/clientes', controller.clientes)
+    app.get('/stock/getLatestStockValue/:symbol', controller.getLatestStockValue)
+
+    app.get('/stock/getStockName/:symbol', controller.getStockName)
   };

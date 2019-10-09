@@ -11,7 +11,6 @@ app.use(bodyParser.json());
 var routes = require("./api/routes/routes");
 routes(app);
 
-app.use('/', routes);
 app.listen(port);
 
 
