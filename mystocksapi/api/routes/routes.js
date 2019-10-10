@@ -5,4 +5,6 @@ module.exports =  function(app) {
     app.get('/stock/getLatestStockValue/:symbol', controller.getLatestStockValue)
 
     app.get('/stock/getStockName/:symbol', controller.getStockName)
+
+    app.get('/company/:symbol', controller.getCompanyInfo)
   };

@@ -10,15 +10,18 @@ class Header extends React.Component{
         this.state = {
             menuActive: false
         }
-        this.itens = [
+        this.routes = [
             {
-                name:'Pesquise Ações'
+                name:'Pesquise Ações',
+                path: '/stocks'
             }, 
             {
-                name:'Saiba o último preço'
+                name:'Saiba o último preço',
+                path:'/stockPrice'
             }, 
             {
-                name:'Sobre'
+                name:'Sobre',
+                path: '/about'
             }
         ]
     }
@@ -47,7 +50,7 @@ class Header extends React.Component{
                 </button>
                 
                 <h1 className = 'title'>MyStocksApp</h1>
-                <SideMenu id='sideMenu' itens={this.itens}/>
+                <SideMenu id='sideMenu' routes={this.routes}/>
                 
             </div>
         )

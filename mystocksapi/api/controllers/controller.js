@@ -15,18 +15,18 @@ var options = {
 exports.getLatestStockValue = (myApiReq,myApiRes) => {
     options.method = 'GET'
     options.path = `/stable/stock/${myApiReq.params.symbol}/quote/latestPrice?${token}`
-    var request = https.request(options, (res)=>{
+    var httpReq = https.request(options, (httpRes)=>{
         
         let result = ''
         let value
-        res.on('data', chunk => {
+        httpRes.on('data', chunk => {
             result += chunk
         })
-        res.on('error', error =>{
+        httpRes.on('error', error =>{
             myApiRes.send(`Some error happened: ${error}`)
             return;
         });
-        res.on('end', ()=>{
+        httpRes.on('end', ()=>{
             if(result === "Unknown symbol")
             {
                 myApiRes.send("There's no stock with that symbol on the database!");  
@@ -59,28 +59,57 @@ exports.getLatestStockValue = (myApiReq,myApiRes) => {
         });
     });
 
-    request.on('error', error => {
+    httpReq.on('error', error => {
         myApiRes.send(`Some error happened: ${error}`)
         return;
       })
       
-    request.end()
+    httpReq.end()
 }
 
-exports.getStockName = (req, res)=>{
-    con.query("SELECT NAME FROM STOCK WHERE SYMBOL = ?", req.params.symbol, (error, mysqlRes)=>{
+exports.getStockName = (myApiReq, myApiRes)=>{
+    con.query("SELECT NAME FROM STOCK WHERE SYMBOL = ?", myApiReq.params.symbol, (error, mysqlRes)=>{
         if(error)
         {
-            res.send(error);
+            myApiRes.send(error);
         }
         else
         {
             if(mysqlRes.length == 0){
-                res.send("There's no stock with that symbol on the database!");  
+                myApiRes.send("There's no stock with that symbol on the database!");  
             }
             else{
-                res.json(mysqlRes[0]); 
+                myApiRes.json(mysqlRes[0]); 
             }   
         }
     })
+}
+
+exports.getCompanyInfo = (req, myApiRes) => {
+options.path = `/stable/stock/${req.params.symbol}/company?${token}`;
+    options.method = 'GET';
+
+    let result = '';
+
+    httpReq = https.request(options, (httpRes)=>{
+        httpRes.on('data', chunk=>{
+            result += chunk;
+        })
+
+        httpRes.on('error', error =>{
+            myApiRes.send(error);
+            return;
+        })
+
+        httpRes.on('end', ()=>{
+            myApiRes.json(JSON.parse(result));
+        })
+    });
+
+    httpReq.on('error', error => {
+        myApiRes.send(`Some error happened: ${error}`)
+        return;
+    })
+      
+    httpReq.end()
 }

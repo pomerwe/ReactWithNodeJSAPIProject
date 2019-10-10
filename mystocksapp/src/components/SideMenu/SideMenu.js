@@ -7,14 +7,14 @@ class SideMenu extends React.Component{
 
     constructor(props){
         super(props)
-        this.itens = this.props.itens;
+        this.routes = this.props.routes;
     }
 
     render(){
         return (
             <div id={this.props.id} hidden className = 'sideMenu'>
-                {this.itens.map(item=>
-                   <MenuItem name = {item.name} key = {this.itens.indexOf(item)} />
+                {this.routes.map(route=>
+                   <MenuItem name = {route.name} path = {route.path} key = {this.routes.indexOf(route)} />
                 )}
             </div>
         )
@@ -22,7 +22,7 @@ class SideMenu extends React.Component{
 }
 
 SideMenu.propTypes = {
-    itens: PropTypes.array.isRequired
+    routes: PropTypes.array.isRequired
 }
 
 export default SideMenu

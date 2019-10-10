@@ -8,6 +8,7 @@
     cursor: pointer;
 }
 .menuItem .label{
+    color: white;
     justify-self: left;
     margin-right:10px;
     align-self: middle;

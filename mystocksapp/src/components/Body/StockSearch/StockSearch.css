@@ -1,0 +1,41 @@
+.stocksInput{
+    height:35px;
+    font-size: 20px;
+    padding-left:10px;
+}
+
+.stocksContainer{
+    width:20%;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.356) !important;
+    margin-top:30px;
+    display: inline-block;
+    
+}
+.stocksContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.stocksContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.stocksContainer::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.stocksContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.stocksInfo{
+    display:inline-block;
+    height: 400px;
+    width:79%;
+    background-color:rgba(64, 64, 255, 0.445);
+}
