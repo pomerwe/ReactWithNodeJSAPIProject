@@ -1,0 +1,15 @@
+.menuItem{
+    padding:15px;
+    
+    display:flex;
+}
+.menuItem:hover{
+    background-color: rgba(135, 207, 235, 0.514);
+    cursor: pointer;
+}
+.menuItem .label{
+    justify-self: left;
+    margin-right:10px;
+    align-self: middle;
+    font-size:15px;
+}
