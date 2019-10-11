@@ -48,7 +48,7 @@ class StockSearch extends React.Component{
     constructor(props){
         super(props)
         
-        if(companies.length == 0){
+        if(companies.length === 0){
             getCompanies();
         }
 
