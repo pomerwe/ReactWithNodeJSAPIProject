@@ -6,14 +6,8 @@ import { stockSelected } from '../../../actions/stockSearch/stock-selected-actio
 
 var companies = [];
 
-class StockSearch extends React.Component{
-
-
-    constructor(props){
-        super(props)
-        
-
-        var http = require('http');
+function getCompanies(){
+    var http = require('http');
 
         var options = {
             hostname:'127.0.0.1',
@@ -45,21 +39,25 @@ class StockSearch extends React.Component{
         })
         
         req.end()
-        this.fun()
-        this.setState()
+}
+
+
+class StockSearch extends React.Component{
+
+
+    constructor(props){
+        super(props)
+        
+        if(companies.length == 0){
+            getCompanies();
+        }
+
+        
     }
 
     onStockSelected = (company) =>{
         this.props.stockSearch.currentCompany = company
         this.props.onStockSelected(this.props.stockSearch)
-    }
-
-    fun(){
-        console.log(this.companies);
-        
-        setTimeout(()=>{
-            this.fun()
-        },350)
     }
     
     

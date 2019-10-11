@@ -10,12 +10,12 @@ USE `mystocksdb`;
 CREATE TABLE IF NOT EXISTS `stock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `symbol` varchar(60) DEFAULT NULL,
-  `NAME` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `stock` DISABLE KEYS */;
-REPLACE INTO `stock` (`id`, `symbol`, `NAME`) VALUES
+REPLACE INTO `stock` (`id`, `symbol`, `name`) VALUES
 	(25534, 'A', 'Agilent Technologies Inc.'),
 	(25535, 'AA', 'Alcoa Corp.'),
 	(25536, 'AAAU', 'Perth Mint Physical Gold ETF'),
