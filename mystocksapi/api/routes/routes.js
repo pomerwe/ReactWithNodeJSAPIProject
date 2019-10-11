@@ -7,4 +7,6 @@ module.exports =  function(app) {
     app.get('/stock/getStockName/:symbol', controller.getStockName)
 
     app.get('/company/:symbol', controller.getCompanyInfo)
+
+    app.get('/allStocks',controller.getAllStocks)
   };

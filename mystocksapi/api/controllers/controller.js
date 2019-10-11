@@ -113,3 +113,14 @@ options.path = `/stable/stock/${req.params.symbol}/company?${token}`;
       
     httpReq.end()
 }
+
+exports.getAllStocks = (myApiReq, myApiRes)=>{
+    con.query("SELECT * FROM STOCK",null,(error, mysqlRes) =>{
+        if(error){
+            myApiRes.send(error);
+        }
+        else{
+            myApiRes.json(mysqlRes);
+        }
+    })
+}

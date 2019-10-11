@@ -1,10 +1,12 @@
 'use strict';
-var connection = require("./database/connection")
 var express = require('express'),
+cors = require('cors'),
 app = express(),
+
 port = 4000;
 const bodyParser = require('body-parser')
 
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
