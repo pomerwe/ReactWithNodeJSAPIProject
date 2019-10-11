@@ -12,9 +12,9 @@ class SideMenu extends React.Component{
 
     render(){
         return (
-            <div id={this.props.id} hidden className = 'sideMenu'>
-                {this.routes.map(route=>
-                   <MenuItem name = {route.name} path = {route.path} key = {this.routes.indexOf(route)} />
+            <div className = 'sideMenu'>
+                {this.routes.map((route,key)=>
+                   <MenuItem name = {route.name} path = {route.path} key = {key} />
                 )}
             </div>
         )

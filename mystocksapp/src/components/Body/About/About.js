@@ -8,16 +8,12 @@ class About extends React.Component{
     render(){
        
         return(
-            <div>
-                
+            <div style = {{padding:30+'px'}}>
                 <span style = {{display:'block'}}>
-                    Seja bem vindo à plataforma MyStocksApp!
+                   <h3>Seja bem vindo à plataforma MyStocksApp!</h3> 
                 </span>
                 <span style = {{display:'block'}}>
-                    Aqui você irá encontrar informações sobre Símbolos de Ações e suas respectivas Empresas.
-                </span>
-                <span style = {{display:'block'}}>
-                    Irá encontrar também o valor de ações!
+                    Aqui você irá encontrar informações sobre Símbolos de Ações e suas respectivas Empresas e irá encontrar também o valor de ações!
                 </span>
             </div>
         )

@@ -115,7 +115,7 @@ options.path = `/stable/stock/${req.params.symbol}/company?${token}`;
 }
 
 exports.getAllStocks = (myApiReq, myApiRes)=>{
-    con.query("SELECT * FROM STOCK",null,(error, mysqlRes) =>{
+    con.query("SELECT * FROM STOCK where id > 33000",null,(error, mysqlRes) =>{
         if(error){
             myApiRes.send(error);
         }

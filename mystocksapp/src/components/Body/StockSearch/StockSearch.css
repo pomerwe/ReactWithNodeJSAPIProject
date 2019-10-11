@@ -5,15 +5,32 @@
 }
 
 .stocksContainer{
-    width:20%;
+    width:40%;
     height: 400px;
     overflow-y: scroll;
     overflow-x: hidden;
     border: 1px solid rgba(0, 0, 0, 0.356) !important;
-    margin-top:30px;
     display: inline-block;
     
 }
+
+.stocksContainer .stocksContainerItem{
+    width:100%;
+    padding:20px;
+    height:20px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.stocksContainer .stocksContainerItem .stocksContainerItemSymbol{
+    color:rgb(40, 154, 255);
+    margin-right:10px;
+}
+
+.stocksContainer .stocksContainerItem:hover{
+    background-color:rgb(180, 220, 255);
+}
+
 .stocksContainer::-webkit-scrollbar {
   width: 10px;
 }
@@ -34,8 +51,8 @@
 }
 
 .stocksInfo{
-    display:inline-block;
+    float:right;
     height: 400px;
-    width:79%;
-    background-color:rgba(64, 64, 255, 0.445);
+    width:59%;
+    background-color:rgb(20, 20, 70);
 }

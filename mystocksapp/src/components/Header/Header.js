@@ -2,14 +2,13 @@ import React from 'react'
 import './Header.css';
 import menu from '../../assets/menu.png'
 import SideMenu from '../SideMenu/SideMenu'
+import { connect } from 'react-redux'
+import toggleMenu from '../../actions/header/toggle-menu'
 
 class Header extends React.Component{
     
     constructor(props){
         super(props)
-        this.state = {
-            menuActive: false
-        }
         this.routes = [
             {
                 name:'Pesquise Ações',
@@ -26,31 +25,28 @@ class Header extends React.Component{
         ]
     }
     
-    toggleMenu = () =>{
-        this.setState(state=>{
-            state.menuActive = !state.menuActive
-            
-            document.getElementById('sideMenu').hidden = !this.state.menuActive
-        
-            if(this.state.menuActive){
-                document.getElementById('body').style.paddingLeft = 250 + 'px';
-            }
-            else{
-            document.getElementById('body').style.paddingLeft = 7 + '%';
-            }
-        })
+    onToggleMenu = () =>{
+        this.props.header.sideMenuIsActive = !this.props.header.sideMenuIsActive
+        this.props.onToggleMenu(this.props.header)
+
+        if(this.props.header.sideMenuIsActive){
+            document.getElementById('body').style.paddingLeft = 250 + 'px';
+        }
+        else{
+        document.getElementById('body').style.paddingLeft = 7 + '%';
+        }
     }
 
     render(){
         return(
             <div className='container'>
-                <button onClick={this.toggleMenu} className='menuButton'>
+                <button onClick={this.onToggleMenu} className='menuButton'>
                     <img alt='menu' className= 'invert' src={menu}>
                     </img>
                 </button>
                 
                 <h1 className = 'title'>MyStocksApp</h1>
-                <SideMenu id='sideMenu' routes={this.routes}/>
+                {this.props.header.sideMenuIsActive === true ? <SideMenu routes={this.routes}/>  : null}
                 
             </div>
         )
@@ -58,4 +54,14 @@ class Header extends React.Component{
     
 }
 
-export default Header
+const mapStateToProps = (state) => {
+    return {
+        header: state.header
+    }
+}
+
+const mapActionToProps = {
+    onToggleMenu:toggleMenu
+}
+
+export default connect(mapStateToProps,mapActionToProps)(Header)
