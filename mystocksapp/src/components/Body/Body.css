@@ -1,18 +1,15 @@
 .body{
     min-height:100vh;
     overflow: auto;
-    background-color: rgb(230, 230, 227);
-    padding-right:7%;
-    padding-left:7%;
+    background-color: #2e2e46;
+    padding-right:8%;
+    padding-left:13%;
+    padding-top:76px;
 }
 
-.body .container{
-    margin-top:100px;
+.body .bodyContainer{
     position:relative;
-    background-color:white;
-    border: 1px black;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.301);
-    padding:15px;
+    padding:30px;
     display: block;
     height:auto;
     
@@ -24,8 +21,10 @@
 }
 
 .body .container .mainContent{
+    display:flex;
+    align-items: center;
+    justify-content: center;
     position:relative;
     font-size:25px;
-    color:rgb(65, 65, 65);
-    min-height:70% !important;
+    color:rgb(65, 65, 65); 
 }

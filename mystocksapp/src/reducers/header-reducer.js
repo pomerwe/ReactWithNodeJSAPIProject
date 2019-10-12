@@ -1,11 +1,11 @@
-import {TOGGLE_MENU} from '../actions/header/toggle-menu'
+import {HEADER_ACTION} from '../actions/header/header-action'
 
 export default function headerReducer(state = {}, {type, payload}){
   
     switch(type){
-      case TOGGLE_MENU:
+      case HEADER_ACTION:
       {
-        return payload.sideMenuIsActive
+        return payload
       }
       default:
       {

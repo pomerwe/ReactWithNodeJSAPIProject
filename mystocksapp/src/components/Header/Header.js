@@ -1,22 +1,16 @@
 import React from 'react'
 import './Header.css';
-import menu from '../../assets/menu.png'
-import SideMenu from '../SideMenu/SideMenu'
 import { connect } from 'react-redux'
-import toggleMenu from '../../actions/header/toggle-menu'
-
+import headerAction from '../../actions/header/header-action'
+import { Link } from 'react-router-dom'
 class Header extends React.Component{
     
     constructor(props){
         super(props)
         this.routes = [
             {
-                name:'Pesquise Ações',
+                name:'Pesquisar Ações',
                 path: '/stocks'
-            }, 
-            {
-                name:'Saiba o último preço',
-                path:'/stockPrice'
             }, 
             {
                 name:'Sobre',
@@ -25,29 +19,16 @@ class Header extends React.Component{
         ]
     }
     
-    onToggleMenu = () =>{
-        this.props.header.sideMenuIsActive = !this.props.header.sideMenuIsActive
-        this.props.onToggleMenu(this.props.header)
-
-        if(this.props.header.sideMenuIsActive){
-            document.getElementById('body').style.paddingLeft = 250 + 'px';
-        }
-        else{
-        document.getElementById('body').style.paddingLeft = 7 + '%';
-        }
-    }
 
     render(){
         return(
             <div className='container'>
-                <button onClick={this.onToggleMenu} className='menuButton'>
-                    <img alt='menu' className= 'invert' src={menu}>
-                    </img>
-                </button>
-                
-                <h1 className = 'title'>MyStocksApp</h1>
-                {this.props.header.sideMenuIsActive === true ? <SideMenu routes={this.routes}/>  : null}
-                
+                <span className = 'title'>MyStocksApp</span>
+                <div className = 'navigation'>
+                    {this.routes.map((route,key)=>
+                        <Link key = {key}  className='link' to={route.path}>{route.name}</Link>
+                    )}
+                </div>
             </div>
         )
     }
@@ -61,7 +42,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapActionToProps = {
-    onToggleMenu:toggleMenu
+    onHeaderChange:headerAction
 }
 
 export default connect(mapStateToProps,mapActionToProps)(Header)

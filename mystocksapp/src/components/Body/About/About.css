@@ -1,0 +1,12 @@
+.aboutContent{
+    float:right;
+    min-height:180px;
+    height:auto;
+    width:100%;
+    background-color:#363a53;
+    border-radius: 20px 20px 20px 20px;
+    margin-top:150px;
+    margin-bottom:35px;
+    color:white;
+    padding-top:35px;
+  }

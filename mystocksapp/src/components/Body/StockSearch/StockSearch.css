@@ -1,58 +1,242 @@
 .stocksInput{
     height:35px;
-    font-size: 20px;
-    padding-left:10px;
+    font-size: 14px;
+    padding-left:20px;
+    color: black;
+    border-radius:45px;
+    border:none;
+    width:45%;
 }
 
 .stocksContainer{
-    width:40%;
-    height: 400px;
+    width:47%;
     overflow-y: scroll;
     overflow-x: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.356) !important;
+    height: 420px;
     display: inline-block;
+    border-radius:20px 20px 20px 20px;
+    background-color: #363a53;
+    padding-right:30px;
     
 }
 
 .stocksContainer .stocksContainerItem{
-    width:100%;
-    padding:20px;
-    height:20px;
-    font-size:16px;
-    cursor:pointer;
+  width:100%;
+  padding:10px;
+  height:100%;
+  font-size:16px;
+  cursor:pointer;
+  height: auto;
+ 
+}
+.stocksContainer .stocksContainerItem.light{
+  background-color: #40445c;
+}
+.stocksContainer .stocksContainerItem.light:hover{
+  background-color:#4c506b;
+}
+
+.stocksContainer .stocksContainerItem.dark{
+  background-color: #363a53;
+}
+.stocksContainer .stocksContainerItem.dark:hover{
+  background-color: rgb(47, 49, 70);
 }
 
 .stocksContainer .stocksContainerItem .stocksContainerItemSymbol{
-    color:rgb(40, 154, 255);
-    margin-right:10px;
+  color:#00CBFF;
+  position:relative;
+  word-wrap: break-word;
+  display:inline-block;
+  vertical-align: middle;
+  margin-left: 25px;
 }
 
-.stocksContainer .stocksContainerItem:hover{
-    background-color:rgb(180, 220, 255);
+.stocksContainer .stocksContainerItem .stocksContainerItemName{
+  color:#fff;
+  position:relative;
+  word-wrap: break-word;
+  display:inline-block;
+  vertical-align: middle;
 }
+
+
+
 
 .stocksContainer::-webkit-scrollbar {
   width: 10px;
+  border-radius:20px;
+  width:5px;
+  padding-right:5px;
+  background-color: transparent;
 }
 
 /* Track */
 .stocksContainer::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background-color: transparent;
 }
 
 /* Handle */
 .stocksContainer::-webkit-scrollbar-thumb {
-  background: #888;
+  background: rgb(221, 221, 221);
+  border-radius:20px;
+  background-clip: padding-box;
+  width:5px;
 }
 
 /* Handle on hover */
 .stocksContainer::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: rgb(196, 196, 196);
+  border-radius:20px;
 }
 
 .stocksInfo{
-    float:right;
-    height: 400px;
-    width:59%;
-    background-color:rgb(20, 20, 70);
+  padding:2%;
+  min-height:180px;
+  height:auto;
+  width:96%;
+  background-color:#363a53;
+  border-radius: 20px 20px 20px 20px;
+  margin-top:15px;
+  margin-bottom:35px;
+}
+
+.stocksInfo .stocksInfoContent{
+  margin:25px;
+  
+  align-items: center;
+  justify-content: space-between;
+  color:white;
+  text-align: left;
+  height:auto;
+  overflow: visible;
+}
+
+.stocksInfo .stocksInfoContent .logoNameDiv{
+  width:20%;
+  display:inline-block;
+}
+
+.stocksInfo .stocksInfoContent .logoNameDiv .logoDiv{
+  width:70px;
+  height:70px;
+  padding:15px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: none;
+  border-radius: 100%; 
+  display:block;
+  margin: 0 auto;
+}
+
+.stocksInfo .stocksInfoContent .logoNameDiv .companyName{
+  font-weight:bold;
+  display:block;
+  text-align: center;
+}
+
+.stocksInfo .stocksInfoContent .currentValueDiv{
+  width:15%;
+  text-align: left;
+  display:inline-block;
+  margin-left:10px;
+  vertical-align: top;
+}
+
+.stocksInfo .stocksInfoContent .currentValueDiv .currentValueLabel{
+  font-weight:bold;
+  display:block;
+}
+
+.stocksInfo .stocksInfoContent .currentValueDiv .currentValue{
+  display:block;
+}
+
+.stocksInfo .stocksInfoContent .descriptionDiv{
+  width:40%;
+  text-align: left;
+  display:inline-block;
+  margin-left:10px;
+  vertical-align: top;
+}
+
+.stocksInfo .stocksInfoContent .descriptionDiv .description{
+  font-size:14px;
+}
+
+.stocksInfo .stocksInfoContent .rangeValueDiv{
+  width:15%;
+  text-align: left;
+  float:right;
+  margin-left:10px;
+  vertical-align: top;
+  height: 100%;
+}
+
+.stocksInfo .stocksInfoContent .rangeValueDiv .maxValueLabel{
+  font-weight:bold;
+  display:block;
+}
+
+.stocksInfo .stocksInfoContent .rangeValueDiv .maxValue{
+  display:block;
+}
+
+.stocksInfo .stocksInfoContent .rangeValueDiv .minValueLabel{
+  font-weight:bold;
+  display:block;
+}
+
+.stocksInfo .stocksInfoContent .rangeValueDiv .minValue{
+  display:block;
+}
+
+
+
+
+.stocksChart{
+  float:right;
+  height: 420px;
+  width:49%;
+  background-color:#363a53;
+  border-radius: 20px 20px 20px 20px;
+}
+
+.stocksChart .stocksChartContent{
+  margin:30px;
+}
+
+.stocksChart .stocksChartContent .rangeSelectLabel{
+  font-size:14px;
+  font-weight: bold;
+  color:white;
+  margin-right:16px;
+}
+.stocksChart .stocksChartContent .rangeButton{
+  padding:10px;
+  border-radius: 20px;
+  background-color: #4d516b;
+  width:50px;
+  display:inline-block;
+  color:white;
+  cursor:pointer;
+  text-align: center;
+}
+
+.stocksChart .stocksChartContent .rangeButton.start{
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.stocksChart .stocksChartContent .rangeButton.middle{
+  border-radius: 0px;
+}
+
+.stocksChart .stocksChartContent .rangeButton.end{
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.stocksChart .stocksChartContent .rangeButton.selected{
+  background-color:#2382FF;
 }

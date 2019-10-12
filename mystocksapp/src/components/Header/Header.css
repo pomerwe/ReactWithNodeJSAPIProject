@@ -2,44 +2,38 @@
 .container{
     position:fixed;
     top:0;
-    width:100%;
-    background-color: black;
+    background-color: #363a53;
     height: 56px;
-    display:flex;
-    align-items: center;
-    justify-content: left;
+    width:100vw;
+    padding:10px;
     color:rgb(230, 230, 230);
 }
 
 .container .title{
-    align-self: center !important;
-    justify-self: center;
-    margin-left:150px;
+    margin-left:225px;
+    display:inline-block;
+    vertical-align: middle;
+    font-size:32px;
+    font-weight: bold;
 }
 
-.menuButton{
-    align-self: middle;
-    background: none;
-    border:none;
-    margin: 0px;
-    padding: 0px;
-    display:flex;
-    padding:15px;
-}
-.menuButton:focus{
-   border:none;
-   text-decoration: none;
-   outline: none;
+.navigation{
+    
+    display: inline-block;
+    color:white;
+    width:250px;
+    margin-left:400px;
+    height:100%;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.menuButton:hover{
-    background-color: rgb(55, 69, 97);
-    cursor: pointer;
-}
-
-.menuButton img{
-    align-self: center;
-    filter: invert(100%);
-    height:25px;
-    width:28px;
+.navigation .link{
+    color:white;
+    font-size:19px;
+    margin-top: 5px;
+    margin-left:20px;
+    display:inline-block;
+    vertical-align: middle;
+    text-decoration: none;
 }

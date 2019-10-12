@@ -22,10 +22,19 @@ const store = createStore(allReducers,
   {
     currentCompany:
     {
-      symbol:"TRTW",
-      name:"Twitter Inc."
+      symbol:"",
+      name:"",
+      description:'',
+      companyLogo: '',
+      currentValue:undefined,
+      highValue:undefined,
+      lowValue:undefined
     },
-    companiesLoaded:false
+    areCompaniesLoaded:false,
+    companySearchName: '',
+    currentChartRange:'month',
+    currentChartParams: undefined
+    
   }
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
