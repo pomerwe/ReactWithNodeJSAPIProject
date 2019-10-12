@@ -1,3 +1,13 @@
+Para rodar o projeto, você deve:
+1 - Ter o NodeJS instalado em seu sistema operacional;
+2 - Ter iniciado o projeto MyStocksApi(para que as requisições sejam bem sucedidas);
+3 - Abrir um console application(cmd, git bash, terminal) na pasta root do projeto (mystocksapp/) e digitar npm start;
+4 - Esperar com que abra uma janela no navegador com a Aplicação Web funcionando;
+5 - Caso não abra automaticamente, entre em algum navegador e cole localhost:3000/;
+6 - Espere carregar!
+
+----------- Todo o texto abaixo foi gerado automaticamente pelo npm init react-app --------------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

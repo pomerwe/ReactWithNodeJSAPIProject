@@ -8,16 +8,13 @@ import { BrowserRouter } from "react-router-dom";
 import {combineReducers, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import stockSearchReducer from './reducers/stock-search-reducer'
-import headerReducer from './reducers/header-reducer'
 
 const allReducers = combineReducers(
 {
-  stockSearch: stockSearchReducer,
-  header: headerReducer
+  stockSearch: stockSearchReducer
 })
 const store = createStore(allReducers,
   {
-  header:{sideMenuIsActive:false},
   stockSearch:
   {
     currentCompany:

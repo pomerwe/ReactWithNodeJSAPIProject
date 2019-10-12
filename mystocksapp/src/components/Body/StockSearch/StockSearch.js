@@ -10,22 +10,25 @@ const http = require('http');
 class StockSearch extends React.Component{
 
 
+    componentDidMount(){
+        // this.onStockSelected(this.props.stockSearch.currentCompany.symbol)
+    }
 
     componentWillUnmount(){
-        this.props.stockSearch.companySearchName = ''
-        this.props.stockSearch.currentCompany ={
-            symbol:"",
-            name:"",
-            description:'',
-            companyLogo: '',
-            currentValue:undefined,
-            highValue:undefined,
-            lowValue:undefined
-          }
+        // this.props.stockSearch.companySearchName = ''
+        // this.props.stockSearch.currentCompany ={
+        //     symbol:"",
+        //     name:"",
+        //     description:'',
+        //     companyLogo: '',
+        //     currentValue:undefined,
+        //     highValue:undefined,
+        //     lowValue:undefined
+        //   }
         this.props.stockSearch.areCompaniesLoaded = false
-        this.props.stockSearch.companySearchName =  ''
-        this.props.stockSearch.currentChartRange = 'month'
-        this.props.stockSearch.currentChartParams = undefined
+        // this.props.stockSearch.companySearchName =  ''
+        // this.props.stockSearch.currentChartRange = 'month'
+        // this.props.stockSearch.currentChartParams = undefined
         
         this.props.onStockSearchChange(this.props.stockSearch)
     }

@@ -172,12 +172,11 @@ switch (myApiReq.params.range){
         })
 
         httpRes.on('end', ()=>{
-            
-
             var values = JSON.parse(result);
             let returnChartValues = [];
             
             for( let i = 0 ; i < values.length; i++){
+                if(values[i].high == null || values[i].low == null) continue
                 var chartValues = {
                     name: values[i].label,
                     HighPrice:values[i].high,
@@ -185,9 +184,7 @@ switch (myApiReq.params.range){
                 };
                 returnChartValues.push(chartValues)
             }
-            console.log(returnChartValues);
-            myApiRes.json(returnChartValues);
-            
+            myApiRes.json(returnChartValues);            
         })
     });
 

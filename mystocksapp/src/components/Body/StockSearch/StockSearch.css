@@ -8,6 +8,11 @@
     width:45%;
 }
 
+.stocksInput:focus{
+  outline: none;
+  border: 1px color solid rgb(54, 124, 255);
+}
+
 .stocksContainer{
     width:47%;
     overflow-y: scroll;

@@ -1,26 +1,38 @@
-Feito por Estevão Alves Vieira - 3:54 AM 10/9/2019
+Feito por Estevão Alves Vieira 
 
 Gostaria de dizer que nunca desenvolvi api em nodeJS, portanto pode ser que tenham erros de estrutura e de boas práticas.
 
+
+Para executar o projeto deve-se:
+
+1 - Ter o NodeJS instalado no sistema operacional;
+3 - Abrir um console application(cmd, git bash, terminal) na pasta root do projeto (mystocksapp/) e digitar npm start;
+4 - Esperar com que suba a aplicação;
+5 - Agora já é possível fazer requisições às rotas configuradas em localhost:4000!
+
+
 Essa é uma aplicação simples no qual existem algumas chamadas
 
-1 - localhost:4000/stock/getQuote/<Simbolo da ação> - retorna o os valores da ação que vem da API do site 
+1 - /stock/getQuote/<Simbolo da ação> - retorna o os valores da ação que vem da API do site 
 https://iexcloud.io
 
-2 - localhost:4000/stock/getStockName/<Simbolo da ação> - faz uma pesquisa
+2 - /stock/getStockName/<Simbolo da ação> - faz uma pesquisa
 no mysql e retorna o nome da ação com base na sua sigla
 
-3 - localhost:4000/stock/getQuote/<SSimboloigla da ação> - retorna o os valores da ação que vem da API do site 
+3 - /stock/getQuote/<SSimboloigla da ação> - retorna o os valores da ação que vem da API do site 
 https://iexcloud.io
 
-4 - localhost:4000/stock/companyInfo/<Simbolo da ação> - retorna o os as descrições da compania que vem da API do site 
+4 - /stock/companyInfo/<Simbolo da ação> - retorna o os as descrições da compania que vem da API do site 
 https://iexcloud.io
 
-5 - localhost:4000/allStocks/<Simbolo da ação> - retorna o objetos de simbolo de ação e nome da companhia do banco
+5 - /allStocks/<Simbolo da ação> - retorna o objetos de simbolo de ação e nome da companhia do banco
 
-
-6 - localhost:4000/stock/getQuote/<Simbolo da ação> - retorna o os valores da ação que vem da API do site 
+6 - /stock/getQuote/<Simbolo da ação> - retorna o os valores da ação que vem da API do site 
 https://iexcloud.io
+
+7 - /stock/<Simbolo da ação>/<day | month | year> - retorna um histório para o preenchimento de dados do gráfico
+https://iexcloud.io
+
 
 Foi feito inserção de dados no banco através de função no arquivo ./database/connection.js utilizando a API do site https://iexcloud.io;
 
@@ -37,3 +49,5 @@ https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgs
 https://www.twilio.com/blog/2017/08/http-requests-in-node-js.html
 https://nodejs.dev/making-http-requests-with-nodejs
 https://www.luiztools.com.br/post/como-usar-nodejs-mysql/
+https://www.youtube.com/watch?v=OSSpVLpuVWA
+https://pt.stackoverflow.com/
