@@ -11,10 +11,9 @@ var options = {
         'Content-Type': 'application-json'
     }
 }
-
-exports.getLatestStockValue = (myApiReq,myApiRes) => {
+exports.getQuote = (myApiReq,myApiRes) => {
     options.method = 'GET'
-    options.path = `/stable/stock/${myApiReq.params.symbol}/quote/latestPrice?${token}`
+    options.path = `/stable/stock/${myApiReq.params.symbol}/quote?${token}`
     var httpReq = https.request(options, (httpRes)=>{
         
         let result = ''
@@ -34,27 +33,12 @@ exports.getLatestStockValue = (myApiReq,myApiRes) => {
             else
             {
                 value = JSON.parse(result)
-            
-                con.query("SELECT NAME FROM STOCK WHERE SYMBOL = ?", myApiReq.params.symbol, (error, mysqlRes)=>{
-                    if(error)
-                    {
-                        myApiRes.send(error);
-                    }
-                    else
-                    {
-                        let stock = 
-                        {
-                            stock: myApiReq.params.symbol,
-                            name: '',
-                            value: value.toFixed(2)
-                        }
-                        if(mysqlRes.length > 0)
-                        {
-                            stock.name = mysqlRes[0].NAME; 
-                        } 
-                        myApiRes.json(stock)
-                    }
-                })
+                values = {
+                    currentValue:value.latestPrice.toFixed(2),
+                    highValue: value.high.toFixed(2),
+                    lowValue: value.low.toFixed(2)
+                }
+                myApiRes.json(values)
             }
         });
     });
@@ -85,8 +69,50 @@ exports.getStockName = (myApiReq, myApiRes)=>{
     })
 }
 
-exports.getCompanyInfo = (req, myApiRes) => {
-options.path = `/stable/stock/${req.params.symbol}/company?${token}`;
+exports.getCompanyInfo = (myApiReq, myApiRes) => {
+    options.path = `/stable/stock/${myApiReq.params.symbol}/company?${token}`;
+    options.method = 'GET';
+
+    let result = '';
+
+    httpReq = https.request(options, (httpRes)=>{
+        httpRes.on('data', chunk=>{
+            result += chunk;
+        })
+
+        httpRes.on('error', error =>{
+            myApiRes.send(error);
+            return;
+        })
+
+        httpRes.on('end', ()=>{
+            myApiRes.json(JSON.parse(result).description);
+        })
+    });
+
+    httpReq.on('error', error => {
+        myApiRes.send(`Some error happened: ${error}`)
+        return;
+    })
+      
+    httpReq.end()
+}
+
+exports.getAllStocks = (myApiReq, myApiRes)=>{
+    con.query("SELECT * FROM STOCK WHERE NAME LIKE ?",myApiReq.params.companyName+'%',(error, mysqlRes) =>{
+        if(error){
+            myApiRes.send(error);
+        }
+        else{
+            myApiRes.json(mysqlRes);
+        }
+    })
+}
+
+
+exports.getCompanyLogo = (myApiReq, myApiRes)=>{
+    
+    options.path = `/stable/stock/${myApiReq.params.symbol}/logo?${token}`;
     options.method = 'GET';
 
     let result = '';
@@ -114,13 +140,62 @@ options.path = `/stable/stock/${req.params.symbol}/company?${token}`;
     httpReq.end()
 }
 
-exports.getAllStocks = (myApiReq, myApiRes)=>{
-    con.query("SELECT * FROM STOCK",null,(error, mysqlRes) =>{
-        if(error){
-            myApiRes.send(error);
-        }
-        else{
-            myApiRes.json(mysqlRes);
-        }
-    })
+
+exports.getChartValues = (myApiReq, myApiRes)=>{
+    
+switch (myApiReq.params.range){
+    case 'day':
+        options.path=`/stable/stock/${myApiReq.params.symbol}/chart/1d`
+    break;
+
+    case 'month':
+        options.path=`/stable/stock/${myApiReq.params.symbol}/chart/1m`
+    break; 
+
+    case 'year':
+        options.path=`/stable/stock/${myApiReq.params.symbol}/chart/1y`
+    break;
 }
+    options.path +=`?${token}&chartSimplify=${true}`
+    options.method = 'GET';
+
+    let result = '';
+
+    httpReq = https.request(options, (httpRes)=>{
+        httpRes.on('data', chunk=>{
+            result += chunk;
+        })
+
+        httpRes.on('error', error =>{
+            myApiRes.send(error);
+            return;
+        })
+
+        httpRes.on('end', ()=>{
+            
+
+            var values = JSON.parse(result);
+            let returnChartValues = [];
+            
+            for( let i = 0 ; i < values.length; i++){
+                var chartValues = {
+                    name: values[i].label,
+                    HighPrice:values[i].high,
+                    LowPrice: values[i].low
+                };
+                returnChartValues.push(chartValues)
+            }
+            console.log(returnChartValues);
+            myApiRes.json(returnChartValues);
+            
+        })
+    });
+
+    httpReq.on('error', error => {
+        myApiRes.send(`Some error happened: ${error}`)
+        return;
+    })
+      
+    httpReq.end()
+}
+

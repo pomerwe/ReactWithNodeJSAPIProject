@@ -2,11 +2,15 @@
 module.exports =  function(app) {
     var controller = require('../controllers/controller')
   
-    app.get('/stock/getLatestStockValue/:symbol', controller.getLatestStockValue)
+    app.get('/stock/getQuote/:symbol', controller.getQuote)
 
     app.get('/stock/getStockName/:symbol', controller.getStockName)
 
-    app.get('/company/:symbol', controller.getCompanyInfo)
+    app.get('/companyInfo/:symbol', controller.getCompanyInfo)
 
-    app.get('/allStocks',controller.getAllStocks)
+    app.get('/allStocks/:companyName', controller.getAllStocks)
+
+    app.get('/getCompanyLogo/:symbol', controller.getCompanyLogo)
+
+    app.get('/getChartValues/:symbol/:range',controller.getChartValues)
   };
