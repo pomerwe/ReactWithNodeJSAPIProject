@@ -24,7 +24,8 @@ const store = createStore(allReducers,
     {
       symbol:"TRTW",
       name:"Twitter Inc."
-    }
+    },
+    companiesLoaded:false
   }
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

@@ -5,7 +5,7 @@ export default function headerReducer(state = {}, {type, payload}){
     switch(type){
       case TOGGLE_MENU:
       {
-        return payload
+        return payload.sideMenuIsActive
       }
       default:
       {
