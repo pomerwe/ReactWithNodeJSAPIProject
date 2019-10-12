@@ -280,7 +280,7 @@ class StockSearch extends React.Component{
                 </div>
                 <div className="stocksChart">
                     <div className="stocksChartContent">
-                        <div style={{margin:3+'px',marginBottom:12+'px'}}>
+                        <div style={{margin:3+'px',marginBottom:25+'px', textAlign:'center'}}>
                             <span className='rangeSelectLabel'>Pesquisar por: </span>
                             <div onClick={() => this.onChartRangeChange("day")} className={`rangeButton start ${(this.props.stockSearch.currentChartRange === 'day' ? 'selected' :  '')}`}>Dia</div>
                             <div onClick={() => this.onChartRangeChange("month")} className={`rangeButton middle ${(this.props.stockSearch.currentChartRange === 'month' ?  'selected' :  '')}`}>Mês</div>
