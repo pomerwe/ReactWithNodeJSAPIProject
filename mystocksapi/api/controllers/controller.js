@@ -32,7 +32,6 @@ exports.getQuote = (myApiReq,myApiRes) => {
             }
             else
             {
-                console.log(myApiReq.params.symbol)
                 value = JSON.parse(result)
                 values = {
                     currentValue:value.latestPrice !== null ? value.latestPrice.toFixed(2) : '--',

@@ -19,7 +19,7 @@ export default class Example extends PureComponent {
             >
                 
                 <XAxis stroke='#fff' dataKey="name" />
-                <YAxis stroke='#fff' domain={[0, Math.round(this.props.highValue * 2) ]} />
+                <YAxis stroke='#fff' domain={[0, Math.round(this.props.currentValue * 2) ]} />
                 <Tooltip />
                 <Legend fontSize={40} />
                 <Line type="monotone" dataKey="HighPrice" stroke="#62ff00" />

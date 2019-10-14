@@ -287,7 +287,7 @@ class StockSearch extends React.Component{
                             <div onClick={() => this.onChartRangeChange("year")} className={`rangeButton end ${(this.props.stockSearch.currentChartRange === 'year' ?  'selected' :  '')}`}>Ano</div>
                         </div>
                         {this.props.stockSearch.currentChartParams !== undefined 
-                            ? <StockChart data = {this.props.stockSearch.currentChartParams} highValue={this.props.stockSearch.currentCompany.highValue}/>  : null
+                            ? <StockChart data = {this.props.stockSearch.currentChartParams} currentValue={this.props.stockSearch.currentCompany.currentValue}/>  : null
                         }
                     </div>
                 </div>
