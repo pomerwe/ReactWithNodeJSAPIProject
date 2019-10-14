@@ -6,6 +6,7 @@ Gostaria de dizer que nunca desenvolvi api em nodeJS, portanto pode ser que tenh
 Para executar o projeto deve-se:
 
 1 - Ter o NodeJS instalado no sistema operacional;
+2 - Mysql instalado e configurado na porta 3306 e ter o banco (/database/mystocksdb.sql) inserido
 3 - Abrir um console application(cmd, git bash, terminal) na pasta root do projeto (mystocksapp/) e digitar npm start;
 4 - Esperar com que suba a aplicação;
 5 - Agora já é possível fazer requisições às rotas configuradas em localhost:4000!
