@@ -11,7 +11,9 @@ var connection = mysql.createConnection({
 
 connection.connect((error) => {
     if(error){
-        return error;
+        console.log("Erro: " + error.sqlMessage);
+        console.log("Importe o banco de dados corretamente!");
+        process.exit()
     }
     else{
         console.log("Connection Success!");
