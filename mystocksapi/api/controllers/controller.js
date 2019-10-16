@@ -99,7 +99,7 @@ exports.getCompanyInfo = (myApiReq, myApiRes) => {
 }
 
 exports.getAllStocks = (myApiReq, myApiRes)=>{
-    con.query("SELECT * FROM STOCK WHERE NAME LIKE ?",myApiReq.params.companyName+'%',(error, mysqlRes) =>{
+    con.query("SELECT * FROM STOCK WHERE NAME LIKE ?",'%'+myApiReq.params.companyName+'%',(error, mysqlRes) =>{
         if(error){
             myApiRes.send(error);
         }

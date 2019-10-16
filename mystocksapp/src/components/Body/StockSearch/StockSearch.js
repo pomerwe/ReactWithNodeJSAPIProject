@@ -94,6 +94,7 @@ class StockSearch extends React.Component{
             
                 res.on('end', ()=>{
                     companies = JSON.parse(result)
+                    console.log(companies)
                     this.onStocksLoaded()
                     
                 })
