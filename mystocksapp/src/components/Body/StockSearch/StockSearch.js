@@ -3,12 +3,17 @@ import "./StockSearch.css"
 import { connect } from 'react-redux'
 import { stockSearchAction } from '../../../actions/stockSearch/stock-search-action'
 import StockChart from './StockChart'
-
+import { HttpService } from '../../../services/HttpService'
 var companies = [];
-const http = require('http');
+
 
 class StockSearch extends React.Component{
 
+
+    constructor(){
+        super()
+        this.http = new HttpService();
+    }
 
     componentDidMount(){
         // this.onStockSelected(this.props.stockSearch.currentCompany.symbol)
@@ -34,196 +39,74 @@ class StockSearch extends React.Component{
     }
 
     getImageLogo(symbol){
-        var options = {
-            hostname:'127.0.0.1',
-            method:'GET',
-            path:`/getCompanyLogo/${symbol}`,
-            port: 4000,
-            headers:{
-                'Content-Type': 'application-json'
+        var path = `/getCompanyLogo/${symbol}`
+        this.http.get(path)
+        .then(res=>{
+            var imgUrl = res.data.url;
+            this.props.stockSearch.currentCompany.companyLogo = imgUrl;
+            this.props.onStockSearchChange(this.props.stockSearch)
             }
-        }
-        var req = http.request(options, res=>{
-            var result = '';
-        
-            res.on('data', chunk=>{
-                result += chunk;
-            })
-        
-            res.on('error', error =>{
-                return;
-            })
-        
-            res.on('end', ()=>{
-                var imgUrl = JSON.parse(result).url;
-                this.props.stockSearch.currentCompany.companyLogo = imgUrl;
-                this.props.onStockSearchChange(this.props.stockSearch)
-                
-            })
+        )
+        .catch(error=>{
+            console.log(error);
         })
-        
-        req.on('error', error=>{
-            return;
-        })
-        
-        req.end()
     }
 
     getCompanies(){
-
         if(this.props.stockSearch.companySearchName !== ''){
-            var options = {
-                hostname:'127.0.0.1',
-                method:'GET',
-                path:`/allStocks/${this.props.stockSearch.companySearchName}`,
-                port: 4000,
-                headers:{
-                    'Content-Type': 'application-json'
-                }
-            }
-            var req = http.request(options, res=>{
-                var result = '';
-            
-                res.on('data', chunk=>{
-                    result += chunk;
-                })
-            
-                res.on('error', error =>{
-                    return;
-                })
-            
-                res.on('end', ()=>{
-                    companies = JSON.parse(result)
+        var path = `/allStocks/${this.props.stockSearch.companySearchName}`
+        this.http.get(path)
+                .then(res=>{
+                    companies = res.data
                     console.log(companies)
                     this.onStocksLoaded()
-                    
                 })
-            })
-            
-            req.on('error', error=>{
-                return;
-            })
-            
-            req.end()
+                .catch(error=>{
+                    console.log(error);
+                })
         }
     }
 
     getCompanyInfo(symbol){
-
-        var options = {
-            hostname:'127.0.0.1',
-            method:'GET',
-            path:`/companyInfo/${symbol}`,
-            port: 4000,
-            headers:{
-                'Content-Type': 'application-json'
-            }
-        }
-        var req = http.request(options, res=>{
-            var result = '';
-        
-            res.on('data', chunk=>{
-                result += chunk;
-            })
-        
-            res.on('error', error =>{
-                return;
-            })
-        
-            res.on('end', ()=>{
-                let description = JSON.parse(result)
+        var path = `/companyInfo/${symbol}`
+        this.http.get(path)
+            .then(res=>{
+                let description = res.data
                 this.props.stockSearch.currentCompany.description = description;
                 this.props.onStockSearchChange(this.props.stockSearch)
-                
             })
-        })
-        
-        req.on('error', error=>{
-            return;
-        })
-        
-        req.end()
-        
+            .catch(error=>{
+                console.log(error);
+            })
     }
 
     getStockQuote(symbol){
-
-        var options = {
-            hostname:'127.0.0.1',
-            method:'GET',
-            path:`/stock/getQuote/${symbol}`,
-            port: 4000,
-            headers:{
-                'Content-Type': 'application-json'
-            }
-        }
-        var req = http.request(options, res=>{
-            var result = '';
-        
-            res.on('data', chunk=>{
-                result += chunk;
-            })
-        
-            res.on('error', error =>{
-                return;
-            })
-        
-            res.on('end', ()=>{
-                let values = JSON.parse(result)
+            var path = `/stock/getQuote/${symbol}`
+            this.http.get(path)
+            .then(res=>{
+                let values = res.data
                 this.props.stockSearch.currentCompany.currentValue = values.currentValue
                 this.props.stockSearch.currentCompany.highValue = values.highValue
                 this.props.stockSearch.currentCompany.lowValue = values.lowValue
                 this.props.onStockSearchChange(this.props.stockSearch)
-                
             })
-        })
-        
-        req.on('error', error=>{
-            return;
-        })
-        
-        req.end()
-        
+            .catch(error=>{
+                console.log(error);
+            })
     }
 
     getChartValues(symbol){
-
-        var options = {
-            hostname:'127.0.0.1',
-            method:'GET',
-            path:`/getChartValues/${symbol}/${this.props.stockSearch.currentChartRange}`,
-            port: 4000,
-            headers:{
-                'Content-Type': 'application-json'
-            }
-        }
-        var req = http.request(options, res=>{
-            var result = '';
-        
-            res.on('data', chunk=>{
-                result += chunk;
-            })
-        
-            res.on('error', error =>{
-                return;
-            })
-        
-            res.on('end', ()=>{
-                let values = JSON.parse(result)
+        var path=`/getChartValues/${symbol}/${this.props.stockSearch.currentChartRange}`
+        this.http.get(path)
+            .then(res=>{
+                let values = res.data
                 this.props.stockSearch.currentChartParams = values
                 this.props.onStockSearchChange(this.props.stockSearch)
-                
             })
-        })
-        
-        req.on('error', error=>{
-            return;
-        })
-        
-        req.end()
-        
+            .catch(error=>{
+                console.log(error);
+            })
     }
-   
 
     onStockSelected = (company) =>{
         this.props.stockSearch.currentCompany = company
@@ -250,18 +133,16 @@ class StockSearch extends React.Component{
         this.props.onStockSearchChange(this.props.stockSearch)
         this.getChartValues(this.props.stockSearch.currentCompany.symbol)
     }
-    
+
     render(){
-
-        if(!this.props.stockSearch.areCompaniesLoaded){
-            this.getCompanies();
-        }
-
         return(
             <div>
                 <div style={{marginBottom:30+'px'}}>
                     <input placeholder={'Pesquisar ações...'} className="stocksInput" onKeyUp={(ev) => this.onInputChange(ev.target.value)}>
                     </input> 
+                    <button onClick={() => this.getCompanies()}>
+                    Pesquisar
+                    </button>
                 </div>
                 <div className= 'stocksContainer'>
                     {this.props.stockSearch.companySearchName !== '' ?
