@@ -1,38 +1,30 @@
 var con = require("../../database/connection");
-const https = require('https');
-const hostname = 'cloud.iexapis.com'
+var axios = require('axios');
+const baseURL = 'https://cloud.iexapis.com:443'
 const token = 'token=pk_4f86b387dfb846de98e823999d096d59';
-const  port = 443
-var options = {
-    //path,method
-    hostname: hostname,
-    port: port,
-    headers:{
-        'Content-Type': 'application-json'
-    }
-}
+const headers = {
+    'Content-Type': 'application-json'
+};
+
+const https = axios.create({
+    baseURL: baseURL,
+    headers: headers,
+}); 
+
+
+
 exports.getQuote = (myApiReq,myApiRes) => {
-    options.method = 'GET'
-    options.path = `/stable/stock/${myApiReq.params.symbol}/quote?${token}`
-    var httpReq = https.request(options, (httpRes)=>{
-        
-        let result = ''
-        let value
-        httpRes.on('data', chunk => {
-            result += chunk
-        })
-        httpRes.on('error', error =>{
-            myApiRes.send(`Some error happened: ${error}`)
-            return;
-        });
-        httpRes.on('end', ()=>{
-            if(result === "Unknown symbol")
+    path = `/stable/stock/${myApiReq.params.symbol}/quote?${token}`
+    https.get(path)
+    .then(
+        res =>{
+            if(res.data === "Unknown symbol")
             {
                 myApiRes.send("There's no stock with that symbol on the database!");  
             }
             else
             {
-                value = JSON.parse(result)
+                value = res.data;
                 values = {
                     currentValue:value.latestPrice !== null ? value.latestPrice.toFixed(2) : '--',
                     highValue: value.high !== null ? value.high.toFixed(2) : '--',
@@ -40,15 +32,11 @@ exports.getQuote = (myApiReq,myApiRes) => {
                 }
                 myApiRes.json(values)
             }
-        });
-    });
-
-    httpReq.on('error', error => {
-        myApiRes.send(`Some error happened: ${error}`)
-        return;
-      })
-      
-    httpReq.end()
+        }
+    )
+    .catch(
+        error => console.log(error)
+    )
 }
 
 exports.getStockName = (myApiReq, myApiRes)=>{
@@ -60,42 +48,24 @@ exports.getStockName = (myApiReq, myApiRes)=>{
         else
         {
             if(mysqlRes.length == 0){
-                myApiRes.send("There's no stock with that symbol on the database!");  
+                myApiRes.send("There's no stock with that symbol on the database!") 
             }
             else{
-                myApiRes.json(mysqlRes[0]); 
+                myApiRes.json(mysqlRes[0])
             }   
         }
     })
 }
 
 exports.getCompanyInfo = (myApiReq, myApiRes) => {
-    options.path = `/stable/stock/${myApiReq.params.symbol}/company?${token}`;
-    options.method = 'GET';
-
-    let result = '';
-
-    httpReq = https.request(options, (httpRes)=>{
-        httpRes.on('data', chunk=>{
-            result += chunk;
-        })
-
-        httpRes.on('error', error =>{
-            myApiRes.send(error);
-            return;
-        })
-
-        httpRes.on('end', ()=>{
-            myApiRes.json(JSON.parse(result).description);
-        })
-    });
-
-    httpReq.on('error', error => {
-        myApiRes.send(`Some error happened: ${error}`)
-        return;
+    path = `/stable/stock/${myApiReq.params.symbol}/company?${token}`;
+    https.get(path)
+    .then(res =>{
+        myApiRes.json(res.data.description);
     })
-      
-    httpReq.end()
+    .catch(error=>{
+        console.log(error)
+    })
 }
 
 exports.getAllStocks = (myApiReq, myApiRes)=>{
@@ -111,33 +81,14 @@ exports.getAllStocks = (myApiReq, myApiRes)=>{
 
 
 exports.getCompanyLogo = (myApiReq, myApiRes)=>{
-    
-    options.path = `/stable/stock/${myApiReq.params.symbol}/logo?${token}`;
-    options.method = 'GET';
-
-    let result = '';
-
-    httpReq = https.request(options, (httpRes)=>{
-        httpRes.on('data', chunk=>{
-            result += chunk;
-        })
-
-        httpRes.on('error', error =>{
-            myApiRes.send(error);
-            return;
-        })
-
-        httpRes.on('end', ()=>{
-            myApiRes.json(JSON.parse(result));
-        })
-    });
-
-    httpReq.on('error', error => {
-        myApiRes.send(`Some error happened: ${error}`)
-        return;
+    path = `/stable/stock/${myApiReq.params.symbol}/logo?${token}`;
+    https.get(path)
+    .then(res=>{
+        myApiRes.json(res.data);
     })
-      
-    httpReq.end()
+    .catch(error=>{
+        console.log(error);
+    })
 }
 
 
@@ -145,54 +96,36 @@ exports.getChartValues = (myApiReq, myApiRes)=>{
     
 switch (myApiReq.params.range){
     case 'day':
-        options.path=`/stable/stock/${myApiReq.params.symbol}/chart/1d`
+        path=`/stable/stock/${myApiReq.params.symbol}/chart/1d`
     break;
 
     case 'month':
-        options.path=`/stable/stock/${myApiReq.params.symbol}/chart/1m`
+        path=`/stable/stock/${myApiReq.params.symbol}/chart/1m`
     break; 
 
     case 'year':
-        options.path=`/stable/stock/${myApiReq.params.symbol}/chart/1y`
+        path=`/stable/stock/${myApiReq.params.symbol}/chart/1y`
     break;
 }
-    options.path +=`?${token}&chartSimplify=${true}`
-    options.method = 'GET';
+    path +=`?${token}&chartSimplify=${true}`
 
-    let result = '';
-
-    httpReq = https.request(options, (httpRes)=>{
-        httpRes.on('data', chunk=>{
-            result += chunk;
-        })
-
-        httpRes.on('error', error =>{
-            myApiRes.send(error);
-            return;
-        })
-
-        httpRes.on('end', ()=>{
-            var values = JSON.parse(result);
-            let returnChartValues = [];
-            
-            for( let i = 0 ; i < values.length; i++){
-                if(values[i].high == null || values[i].low == null) continue
-                var chartValues = {
-                    name: values[i].label,
-                    HighPrice:values[i].high,
-                    LowPrice: values[i].low
-                };
-                returnChartValues.push(chartValues)
-            }
-            myApiRes.json(returnChartValues);            
-        })
-    });
-
-    httpReq.on('error', error => {
-        myApiRes.send(`Some error happened: ${error}`)
-        return;
+    https.get(path)
+    .then(res=>{
+        var values = res.data;
+        let returnChartValues = [];
+        for( let i = 0 ; i < values.length; i++){
+            if(values[i].high == null || values[i].low == null) continue
+            var chartValues = {
+                name: values[i].label,
+                HighPrice:values[i].high,
+                LowPrice: values[i].low
+            };
+            returnChartValues.push(chartValues)
+        }
+        myApiRes.json(returnChartValues)
     })
-      
-    httpReq.end()
+    .catch(error=>{
+        console.log(error)
+    })
 }
 
