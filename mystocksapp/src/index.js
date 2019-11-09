@@ -14,24 +14,23 @@ const allReducers = combineReducers(
 })
 const store = createStore(allReducers,
   {
-  stockSearch:
-  {
-    currentCompany:
+    stockSearch:
     {
-      symbol:"",
-      name:"",
-      description:'',
-      companyLogo: '',
-      currentValue:undefined,
-      highValue:undefined,
-      lowValue:undefined
-    },
-    areCompaniesLoaded:false,
-    companySearchName: '',
-    currentChartRange:'month',
-    currentChartParams: undefined
-    
-  }
+      currentCompany:
+      {
+        symbol:"",
+        name:"",
+        description:'',
+        companyLogo: '',
+        currentValue:undefined,
+        highValue:undefined,
+        lowValue:undefined
+      },
+      areCompaniesLoaded:false,
+      companySearchName: '',
+      currentChartRange:'month',
+      currentChartParams: undefined
+    }
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

@@ -1,7 +1,7 @@
 import React from 'react'
 import "./StockSearch.css"
 import { connect } from 'react-redux'
-import { stockSearchAction } from '../../../actions/stockSearch/stock-search-action'
+import { stockSearchAction, setStockLogoImage, setCompanyDescription, setStockQuotes, setChartParams } from '../../../actions/stockSearch/stock-search-action'
 import StockChart from './StockChart'
 import { HttpService } from '../../../services/HttpService'
 var companies = [];
@@ -15,40 +15,16 @@ class StockSearch extends React.Component{
         this.http = new HttpService();
     }
 
-    componentDidMount(){
-        // this.onStockSelected(this.props.stockSearch.currentCompany.symbol)
-    }
-
-    componentWillUnmount(){
-        // this.props.stockSearch.companySearchName = ''
-        // this.props.stockSearch.currentCompany ={
-        //     symbol:"",
-        //     name:"",
-        //     description:'',
-        //     companyLogo: '',
-        //     currentValue:undefined,
-        //     highValue:undefined,
-        //     lowValue:undefined
-        //   }
-        this.props.stockSearch.areCompaniesLoaded = false
-        // this.props.stockSearch.companySearchName =  ''
-        // this.props.stockSearch.currentChartRange = 'month'
-        // this.props.stockSearch.currentChartParams = undefined
-        
-        this.props.onStockSearchChange(this.props.stockSearch)
-    }
 
     getImageLogo(symbol){
         var path = `/getCompanyLogo/${symbol}`
         this.http.get(path)
         .then(res=>{
-            var imgUrl = res.data.url;
-            this.props.stockSearch.currentCompany.companyLogo = imgUrl;
-            this.props.onStockSearchChange(this.props.stockSearch)
-            }
-        )
+            var imgUrl = res.data.url
+            this.props.setStockLogoImage(imgUrl)
+        })
         .catch(error=>{
-            console.log(error);
+            console.log(error)
         })
     }
 
@@ -58,7 +34,6 @@ class StockSearch extends React.Component{
         this.http.get(path)
                 .then(res=>{
                     companies = res.data
-                    console.log(companies)
                     this.onStocksLoaded()
                 })
                 .catch(error=>{
@@ -72,8 +47,7 @@ class StockSearch extends React.Component{
         this.http.get(path)
             .then(res=>{
                 let description = res.data
-                this.props.stockSearch.currentCompany.description = description;
-                this.props.onStockSearchChange(this.props.stockSearch)
+                this.props.setCompanyDescription(description)
             })
             .catch(error=>{
                 console.log(error);
@@ -85,10 +59,8 @@ class StockSearch extends React.Component{
             this.http.get(path)
             .then(res=>{
                 let values = res.data
-                this.props.stockSearch.currentCompany.currentValue = values.currentValue
-                this.props.stockSearch.currentCompany.highValue = values.highValue
-                this.props.stockSearch.currentCompany.lowValue = values.lowValue
-                this.props.onStockSearchChange(this.props.stockSearch)
+                console.log({...values})
+                this.props.setStockQuotes(values)
             })
             .catch(error=>{
                 console.log(error);
@@ -100,8 +72,7 @@ class StockSearch extends React.Component{
         this.http.get(path)
             .then(res=>{
                 let values = res.data
-                this.props.stockSearch.currentChartParams = values
-                this.props.onStockSearchChange(this.props.stockSearch)
+                this.props.setChartParams(values)
             })
             .catch(error=>{
                 console.log(error);
@@ -220,7 +191,11 @@ const mapStateToProps = (state) => {
 }
 
 const mapActionsToProps = {
-    onStockSearchChange: stockSearchAction
+    onStockSearchChange: stockSearchAction,
+    setStockLogoImage: setStockLogoImage,
+    setCompanyDescription:setCompanyDescription,
+    setStockQuotes:setStockQuotes,
+    setChartParams:setChartParams
 }
 
 export default connect(mapStateToProps,mapActionsToProps)(StockSearch)
