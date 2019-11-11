@@ -1,7 +1,14 @@
 import React from 'react'
 import "./StockSearch.css"
 import { connect } from 'react-redux'
-import { stockSearchAction, setStockLogoImage, setCompanyDescription, setStockQuotes, setChartParams } from '../../../actions/stockSearch/stock-search-action'
+import { stockSearchAction, 
+        setStockLogoImage, 
+        setCompanyDescription, 
+        setStockQuotes, 
+        setChartParams,
+        setCurrentCompany,
+        setCompanySearchName,
+        setChartRange } from '../../../actions/stockSearch/stock-search-action'
 import StockChart from './StockChart'
 import { HttpService } from '../../../services/HttpService'
 var companies = [];
@@ -29,12 +36,11 @@ class StockSearch extends React.Component{
     }
 
     getCompanies(){
-        if(this.props.stockSearch.companySearchName !== ''){
-        var path = `/allStocks/${this.props.stockSearch.companySearchName}`
+        if(this.props.companySearchName !== ''){
+        var path = `/allStocks/${this.props.companySearchName}`
         this.http.get(path)
                 .then(res=>{
                     companies = res.data
-                    this.onStocksLoaded()
                 })
                 .catch(error=>{
                     console.log(error);
@@ -68,7 +74,7 @@ class StockSearch extends React.Component{
     }
 
     getChartValues(symbol){
-        var path=`/getChartValues/${symbol}/${this.props.stockSearch.currentChartRange}`
+        var path=`/getChartValues/${symbol}/${this.props.currentChartRange}`
         this.http.get(path)
             .then(res=>{
                 let values = res.data
@@ -80,29 +86,20 @@ class StockSearch extends React.Component{
     }
 
     onStockSelected = (company) =>{
-        this.props.stockSearch.currentCompany = company
-        this.props.onStockSearchChange(this.props.stockSearch)
+        this.props.setCurrentCompany(company)
         this.getImageLogo(company.symbol)
         this.getCompanyInfo(company.symbol)
         this.getStockQuote(company.symbol)
         this.getChartValues(company.symbol)
     }
-
-    onStocksLoaded(){
-        this.props.stockSearch.areCompaniesLoaded = true;
-        this.props.onStockSearchChange(this.props.stockSearch)
-    }
     
     onInputChange(companyName){
-        this.props.stockSearch.areCompaniesLoaded = false;
-        this.props.stockSearch.companySearchName = companyName
-        this.props.onStockSearchChange(this.props.stockSearch)
+        this.props.setCompanySearchName(companyName)
     }
 
     onChartRangeChange(range){
-        this.props.stockSearch.currentChartRange = range
-        this.props.onStockSearchChange(this.props.stockSearch)
-        this.getChartValues(this.props.stockSearch.currentCompany.symbol)
+        this.props.setChartRange(range)
+        this.getChartValues(this.props.currentCompany.symbol)
     }
 
     render(){
@@ -116,7 +113,7 @@ class StockSearch extends React.Component{
                     </button>
                 </div>
                 <div className= 'stocksContainer'>
-                    {this.props.stockSearch.companySearchName !== '' ?
+                    {this.props.companySearchName !== '' ?
                         companies.map(
                             (company,key)=>
                                 <div onClick ={() => this.onStockSelected(company)} key ={key} className ={`stocksContainerItem ${companies.indexOf(company) % 2 ? 'dark' : 'light'}`}>
@@ -135,44 +132,44 @@ class StockSearch extends React.Component{
                     <div className="stocksChartContent">
                         <div style={{margin:3+'px',marginBottom:25+'px', textAlign:'center'}}>
                             <span className='rangeSelectLabel'>Pesquisar por: </span>
-                            <div onClick={() => this.onChartRangeChange("day")} className={`rangeButton start ${(this.props.stockSearch.currentChartRange === 'day' ? 'selected' :  '')}`}>Dia</div>
-                            <div onClick={() => this.onChartRangeChange("month")} className={`rangeButton middle ${(this.props.stockSearch.currentChartRange === 'month' ?  'selected' :  '')}`}>Mês</div>
-                            <div onClick={() => this.onChartRangeChange("year")} className={`rangeButton end ${(this.props.stockSearch.currentChartRange === 'year' ?  'selected' :  '')}`}>Ano</div>
+                            <div onClick={() => this.onChartRangeChange("day")} className={`rangeButton start ${(this.props.currentChartRange === 'day' ? 'selected' :  '')}`}>Dia</div>
+                            <div onClick={() => this.onChartRangeChange("month")} className={`rangeButton middle ${(this.props.currentChartRange === 'month' ?  'selected' :  '')}`}>Mês</div>
+                            <div onClick={() => this.onChartRangeChange("year")} className={`rangeButton end ${(this.props.currentChartRange === 'year' ?  'selected' :  '')}`}>Ano</div>
                         </div>
-                        {this.props.stockSearch.currentChartParams !== undefined 
-                            ? <StockChart data = {this.props.stockSearch.currentChartParams} currentValue={this.props.stockSearch.currentCompany.currentValue}/>  : null
+                        {this.props.currentChartParams !== undefined 
+                            ? <StockChart data = {this.props.currentChartParams} currentValue={this.props.currentCompany.currentValue}/>  : null
                         }
                     </div>
                 </div>
                 {
-                    (this.props.stockSearch.currentCompany.name !== '' &&
-                    this.props.stockSearch.currentCompany.companyLogo !== '' &&
-                    this.props.stockSearch.currentCompany.description !== ''  &&
-                    this.props.stockSearch.currentCompany.currentValue !== undefined &&
-                    this.props.stockSearch.currentCompany.highValue !== undefined && 
-                    this.props.stockSearch.currentCompany.lowValue !== undefined)
+                    (this.props.currentCompany.name !== '' &&
+                    this.props.currentCompany.companyLogo !== '' &&
+                    this.props.currentCompany.description !== ''  &&
+                    this.props.currentCompany.currentValue !== undefined &&
+                    this.props.currentCompany.highValue !== undefined && 
+                    this.props.currentCompany.lowValue !== undefined)
                     ?
                     <div className="stocksInfo">
                         <div className="stocksInfoContent">
                             <div className="logoNameDiv">
-                                <div className='logoDiv' style={{backgroundImage:`url(${this.props.stockSearch.currentCompany.companyLogo})`}}>
+                                <div className='logoDiv' style={{backgroundImage:`url(${this.props.currentCompany.companyLogo})`}}>
                                     
                                 </div>
                                 
-                                <span className='companyName'>{this.props.stockSearch.currentCompany.name}</span>
+                                <span className='companyName'>{this.props.currentCompany.name}</span>
                             </div>
                             <div className="currentValueDiv">
                                 <span className='currentValueLabel'>Valor atual:</span>
-                                <span className='currentValue'>{'$'+this.props.stockSearch.currentCompany.currentValue}</span>
+                                <span className='currentValue'>{'$'+this.props.currentCompany.currentValue}</span>
                             </div>
                             <div className="descriptionDiv">
-                                <span className="description">{this.props.stockSearch.currentCompany.description}</span>
+                                <span className="description">{this.props.currentCompany.description}</span>
                             </div>
                             <div className="rangeValueDiv">
                                 <span className='maxValueLabel'>Valor máximo:</span>
-                                <span className='maxValue'>{'$'+this.props.stockSearch.currentCompany.highValue}</span>
+                                <span className='maxValue'>{'$'+this.props.currentCompany.highValue}</span>
                                 <span className='minValueLabel'>Valor mínimo:</span>
-                                <span className='minValue'>{'$'+this.props.stockSearch.currentCompany.lowValue}</span>
+                                <span className='minValue'>{'$'+this.props.currentCompany.lowValue}</span>
                             </div>
                         </div>
                     </div>
@@ -186,7 +183,7 @@ class StockSearch extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        stockSearch:state.stockSearch
+        ...state.stockSearch
     }
 }
 
@@ -195,7 +192,10 @@ const mapActionsToProps = {
     setStockLogoImage: setStockLogoImage,
     setCompanyDescription:setCompanyDescription,
     setStockQuotes:setStockQuotes,
-    setChartParams:setChartParams
+    setChartParams:setChartParams,
+    setCurrentCompany:setCurrentCompany,
+    setCompanySearchName:setCompanySearchName,
+    setChartRange:setChartRange
 }
 
 export default connect(mapStateToProps,mapActionsToProps)(StockSearch)

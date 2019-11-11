@@ -26,7 +26,6 @@ const store = createStore(allReducers,
         highValue:undefined,
         lowValue:undefined
       },
-      areCompaniesLoaded:false,
       companySearchName: '',
       currentChartRange:'month',
       currentChartParams: undefined
