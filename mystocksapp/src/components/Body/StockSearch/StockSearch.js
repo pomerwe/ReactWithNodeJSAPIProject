@@ -8,10 +8,12 @@ import { stockSearchAction,
         setChartParams,
         setCurrentCompany,
         setCompanySearchName,
-        setChartRange } from '../../../actions/stockSearch/stock-search-action'
+        setChartRange,
+        setCompaniesList,
+        setLatestNews} from '../../../actions/stockSearch/stock-search-action'
 import StockChart from './StockChart'
 import { HttpService } from '../../../services/HttpService'
-var companies = [];
+import * as moment from 'moment';
 
 
 class StockSearch extends React.Component{
@@ -40,7 +42,7 @@ class StockSearch extends React.Component{
         var path = `/allStocks/${this.props.companySearchName}`
         this.http.get(path)
                 .then(res=>{
-                    companies = res.data
+                    this.props.setCompaniesList(res.data)
                 })
                 .catch(error=>{
                     console.log(error);
@@ -65,7 +67,6 @@ class StockSearch extends React.Component{
             this.http.get(path)
             .then(res=>{
                 let values = res.data
-                console.log({...values})
                 this.props.setStockQuotes(values)
             })
             .catch(error=>{
@@ -91,6 +92,7 @@ class StockSearch extends React.Component{
         this.getCompanyInfo(company.symbol)
         this.getStockQuote(company.symbol)
         this.getChartValues(company.symbol)
+        this.getLatestNews(company.symbol)
     }
     
     onInputChange(companyName){
@@ -102,21 +104,32 @@ class StockSearch extends React.Component{
         this.getChartValues(this.props.currentCompany.symbol)
     }
 
+    getLatestNews(symbol){
+        var path = `/getLatestNews/${symbol}`
+        this.http.get(path)
+            .then(res=>{
+                this.props.setLatestNews(res.data);
+            })
+            .catch(error=>{
+                console.log(error);
+            })
+    }
+
     render(){
         return(
             <div>
                 <div style={{marginBottom:30+'px'}}>
                     <input placeholder={'Pesquisar ações...'} className="stocksInput" onKeyUp={(ev) => this.onInputChange(ev.target.value)}>
                     </input> 
-                    <button onClick={() => this.getCompanies()}>
+                    <button className='searchButton' onClick={() => this.getCompanies()}>
                     Pesquisar
                     </button>
                 </div>
                 <div className= 'stocksContainer'>
                     {this.props.companySearchName !== '' ?
-                        companies.map(
+                        this.props.companies.map(
                             (company,key)=>
-                                <div onClick ={() => this.onStockSelected(company)} key ={key} className ={`stocksContainerItem ${companies.indexOf(company) % 2 ? 'dark' : 'light'}`}>
+                                <div onClick ={() => this.onStockSelected(company)} key ={key} className ={`stocksContainerItem ${this.props.companies.indexOf(company) % 2 ? 'dark' : 'light'}`}>
                                     <div style={{display:'inline-block',width:20+'%',alignItems:'middle'}}>
                                         <span className='stocksContainerItemSymbol'>{company.symbol}</span>
                                     </div>
@@ -147,7 +160,7 @@ class StockSearch extends React.Component{
                     this.props.currentCompany.description !== ''  &&
                     this.props.currentCompany.currentValue !== undefined &&
                     this.props.currentCompany.highValue !== undefined && 
-                    this.props.currentCompany.lowValue !== undefined)
+                    this.props.currentCompany.lowValue !== undefined )
                     ?
                     <div className="stocksInfo">
                         <div className="stocksInfoContent">
@@ -171,6 +184,19 @@ class StockSearch extends React.Component{
                                 <span className='minValueLabel'>Valor mínimo:</span>
                                 <span className='minValue'>{'$'+this.props.currentCompany.lowValue}</span>
                             </div>
+                            {this.props.currentCompany.latestNews !== undefined 
+                                ?
+                                    <div className='latestNews'>
+                                        <span>Última notícia:</span>
+                                        <p>{this.props.currentCompany.latestNews.headline}</p>
+                                        <p>{this.props.currentCompany.latestNews.source} - { moment(this.props.currentCompany.latestNews.datetime).format("DD/MM/YYYY hh:mm") }</p>
+               
+                                        
+                                    </div>
+                                :
+                            null
+                            }
+                            
                         </div>
                     </div>
                     :
@@ -195,7 +221,9 @@ const mapActionsToProps = {
     setChartParams:setChartParams,
     setCurrentCompany:setCurrentCompany,
     setCompanySearchName:setCompanySearchName,
-    setChartRange:setChartRange
+    setChartRange:setChartRange,
+    setCompaniesList:setCompaniesList,
+    setLatestNews:setLatestNews
 }
 
 export default connect(mapStateToProps,mapActionsToProps)(StockSearch)

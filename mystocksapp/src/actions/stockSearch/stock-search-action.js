@@ -4,7 +4,7 @@ export const STOCK_SEARCH_CURRENTCOMPANY = 'stock-search:current'
 export const STOCK_SEARCH_CHARTPARAMS = 'stock-search:chartParams'
 export const STOCK_SEARCH_COMPANYSEARCHNAME = 'stock-search:companySearchName'
 export const STOCK_SEARCH_CHARTRANGE = 'stock-search:chartRange'
-
+export const STOCK_SEARCH_COMPANIESLOAD = 'stock-search:companiesLoad'
 
 export function stockSearchAction(stockSearch){
 
@@ -43,6 +43,15 @@ export function setStockQuotes(values){
     return returnObj;
 }
 
+export function setLatestNews(latestNews){
+
+    var returnObj = {
+        type:STOCK_SEARCH_CURRENTCOMPANYUPDATE,
+        payload:{latestNews}
+    }
+    return returnObj;
+}
+
 export function setCurrentCompany(values){
 
     var returnObj = {
@@ -75,6 +84,16 @@ export function setCompanySearchName(companySearchName){
     var returnObj = {
         type:STOCK_SEARCH_COMPANYSEARCHNAME,
         payload:{companySearchName}
+    }
+    return returnObj;
+}
+
+
+export function setCompaniesList(companies){
+
+    var returnObj = {
+        type:STOCK_SEARCH_COMPANIESLOAD,
+        payload:{companies}
     }
     return returnObj;
 }

@@ -17,7 +17,6 @@ export default class Example extends PureComponent {
                 data={this.props.data}
                 margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
             >
-                
                 <XAxis stroke='#fff' dataKey="name" />
                 <YAxis stroke='#fff' domain={[0, Math.round(this.props.currentValue * 2) ]} />
                 <Tooltip />

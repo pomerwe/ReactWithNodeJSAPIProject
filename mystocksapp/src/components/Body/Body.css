@@ -1,30 +1,62 @@
-.body{
-    min-height:100vh;
-    overflow: auto;
-    background-color: #2e2e46;
-    padding-right:8%;
-    padding-left:13%;
-    padding-top:76px;
+@media screen and (min-width: 789px) {
+    .body{
+        min-height:100vh;
+        overflow: auto;
+        background-color: #2e2e46;
+        padding-right:8%;
+        padding-top:76px;
+    }
+
+    .body .bodyContainer{
+        position:relative;
+        padding:30px;
+        display: block;
+        height:auto;
+        
+    }
+
+
+    .body .container .menuOpened{
+        padding-left:250px;
+    }
+
+    .body .container .mainContent{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        position:relative;
+        font-size:25px;
+        color:rgb(65, 65, 65); 
+    }
 }
+@media screen and (max-width: 789px) {
+    .body{
+        min-height:100vh;
+        overflow: auto;
+        background-color: #2e2e46;
+        padding-right:8%;
+        padding-top:76px;
+    }
 
-.body .bodyContainer{
-    position:relative;
-    padding:30px;
-    display: block;
-    height:auto;
-    
-}
+    .body .bodyContainer{
+        position:relative;
+        padding:30px;
+        display: block;
+        height:auto;
+        
+    }
 
 
-.body .container .menuOpened{
-    padding-left:250px;
-}
+    .body .container .menuOpened{
+        padding-left:250px;
+    }
 
-.body .container .mainContent{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    position:relative;
-    font-size:25px;
-    color:rgb(65, 65, 65); 
+    .body .container .mainContent{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        position:relative;
+        font-size:25px;
+        color:rgb(65, 65, 65); 
+    }
 }

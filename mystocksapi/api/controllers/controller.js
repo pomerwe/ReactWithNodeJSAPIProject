@@ -129,3 +129,14 @@ switch (myApiReq.params.range){
     })
 }
 
+
+exports.getLatestNews = (myApiReq, myApiRes)=>{
+    path = `/stable/stock/${myApiReq.params.symbol}/news/last/1?${token}`;
+    https.get(path)
+    .then(res=>{
+        myApiRes.json(res.data[0]);
+    })
+    .catch(error=>{
+        console.log(error);
+    })
+}

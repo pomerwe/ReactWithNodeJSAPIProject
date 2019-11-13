@@ -24,11 +24,13 @@ const store = createStore(allReducers,
         companyLogo: '',
         currentValue:undefined,
         highValue:undefined,
-        lowValue:undefined
+        lowValue:undefined,
+        latestNews:undefined
       },
       companySearchName: '',
       currentChartRange:'month',
-      currentChartParams: undefined
+      currentChartParams: undefined,
+      companies:[]
     }
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

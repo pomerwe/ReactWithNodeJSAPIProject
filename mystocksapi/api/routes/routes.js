@@ -13,4 +13,6 @@ module.exports =  function(app) {
     app.get('/getCompanyLogo/:symbol', controller.getCompanyLogo)
 
     app.get('/getChartValues/:symbol/:range',controller.getChartValues)
+
+    app.get('/getLatestNews/:symbol',controller.getLatestNews)
   };

@@ -3,7 +3,8 @@ import {STOCK_SEARCH_ACTION,
    STOCK_SEARCH_CHARTPARAMS, 
    STOCK_SEARCH_CURRENTCOMPANYUPDATE,
    STOCK_SEARCH_COMPANYSEARCHNAME,
-   STOCK_SEARCH_CHARTRANGE} from '../actions/stockSearch/stock-search-action'
+   STOCK_SEARCH_CHARTRANGE,
+   STOCK_SEARCH_COMPANIESLOAD} from '../actions/stockSearch/stock-search-action'
 
 export default function stockSearchReducer(state = {}, {type, payload}){
   switch(type){
@@ -11,7 +12,6 @@ export default function stockSearchReducer(state = {}, {type, payload}){
         return {...payload} 
       }
 
-      
       case STOCK_SEARCH_CURRENTCOMPANY:{
         return {...state, currentCompany:{...payload}}
       }
@@ -31,8 +31,13 @@ export default function stockSearchReducer(state = {}, {type, payload}){
       case STOCK_SEARCH_CHARTRANGE:{
         return {...state, currentChartRange:payload.currentChartRange}
       }
+
+      case STOCK_SEARCH_COMPANIESLOAD:{
+        return {...state, companies:[...payload.companies]}
+      }
+
       default:{
-        return state;
+        return state
       }
     }
   } 

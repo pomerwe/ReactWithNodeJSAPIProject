@@ -1,5 +1,4 @@
 .aboutContent{
-    float:right;
     min-height:180px;
     height:auto;
     width:100%;
@@ -8,5 +7,5 @@
     margin-top:150px;
     margin-bottom:35px;
     color:white;
-    padding-top:35px;
+    padding:35px;
   }
