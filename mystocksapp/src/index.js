@@ -23,6 +23,7 @@ const store = createStore(allReducers,
         description:'',
         companyLogo: '',
         currentValue:undefined,
+        previousValue:undefined,
         highValue:undefined,
         lowValue:undefined,
         latestNews:undefined

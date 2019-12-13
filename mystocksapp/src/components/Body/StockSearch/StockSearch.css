@@ -208,6 +208,7 @@
 
   .stocksInfo .stocksInfoContent .latestNews{
     margin-top:15px;
+    display:block;
   }
 
 
@@ -784,8 +785,21 @@
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
   }
+}
 
-  .stocksChart .stocksChartContent .rangeButton.selected{
-    background-color:#2382FF;
-  }
+
+.stocksChart .stocksChartContent .rangeButton.selected{
+  background-color:#2382FF;
+}
+
+.newsContent{
+  margin-left:10px;
+  width:50%;
+  display:inline-block;
+}
+
+.newsContent .newContentSummary{
+
+  max-height:300px;
+  overflow-y:auto;
 }

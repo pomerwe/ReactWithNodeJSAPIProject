@@ -159,6 +159,7 @@ class StockSearch extends React.Component{
                     this.props.currentCompany.companyLogo !== '' &&
                     this.props.currentCompany.description !== ''  &&
                     this.props.currentCompany.currentValue !== undefined &&
+                    this.props.currentCompany.previousValue !== undefined &&
                     this.props.currentCompany.highValue !== undefined && 
                     this.props.currentCompany.lowValue !== undefined )
                     ?
@@ -174,6 +175,8 @@ class StockSearch extends React.Component{
                             <div className="currentValueDiv">
                                 <span className='currentValueLabel'>Valor atual:</span>
                                 <span className='currentValue'>{'$'+this.props.currentCompany.currentValue}</span>
+                                <span className='currentValueLabel'>Valor anterior:</span>
+                                <span className='currentValue'>{'$'+this.props.currentCompany.previousValue}</span>
                             </div>
                             <div className="descriptionDiv">
                                 <span className="description">{this.props.currentCompany.description}</span>
@@ -186,13 +189,25 @@ class StockSearch extends React.Component{
                             </div>
                             {this.props.currentCompany.latestNews !== undefined 
                                 ?
-                                    <div className='latestNews'>
-                                        <span>Última notícia:</span>
-                                        <p>{this.props.currentCompany.latestNews.headline}</p>
-                                        <p>{this.props.currentCompany.latestNews.source} - { moment(this.props.currentCompany.latestNews.datetime).format("DD/MM/YYYY hh:mm") }</p>
-               
-                                        
+                                this.props.currentCompany.latestNews.map(
+                                    (news,key) =>
+                                    
+                                    <div className='latestNews'  key ={key} >
+                                    <span>{key} notícia:</span>
+                                    <br></br>
+                                    <img src={news.image} style={{maxWidth:'400px', display:'inline-block'}}></img>
+                                    <div className='newsContent'>
+                                        <p>{news.headline}</p>
+                                        <p>{news.source} - { moment(news.datetime).format("DD/MM/YYYY hh:mm") }</p>
+                                        <p>Summary:</p>
+                                        <div className='newContentSummary'>
+                                            <span>{news.summary}</span>
+                                        </div>
                                     </div>
+                                    <hr/>
+                                    </div>
+                                )
+                                   
                                 :
                             null
                             }

@@ -28,7 +28,8 @@ exports.getQuote = (myApiReq,myApiRes) => {
                 values = {
                     currentValue:value.latestPrice !== null ? value.latestPrice.toFixed(2) : '--',
                     highValue: value.high !== null ? value.high.toFixed(2) : '--',
-                    lowValue: value.low !== null ? value.low.toFixed(2) : '--'
+                    lowValue: value.low !== null ? value.low.toFixed(2) : '--',
+                    previousValue: value.previousClose !== null ? value.previousClose.toFixed(2) : '--'
                 }
                 myApiRes.json(values)
             }
@@ -131,10 +132,10 @@ switch (myApiReq.params.range){
 
 
 exports.getLatestNews = (myApiReq, myApiRes)=>{
-    path = `/stable/stock/${myApiReq.params.symbol}/news/last/1?${token}`;
+    path = `/stable/stock/${myApiReq.params.symbol}/news/last/10?${token}`;
     https.get(path)
     .then(res=>{
-        myApiRes.json(res.data[0]);
+        myApiRes.json(res.data);
     })
     .catch(error=>{
         console.log(error);
